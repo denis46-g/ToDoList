@@ -22,6 +22,8 @@ private lateinit var binding: ActivityMainBinding
     private var app = App()
     private val actionService: ActionService = app.actionService
 
+    private val listener: ActionListener = {adapter.data = it}
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,18 +32,22 @@ private lateinit var binding: ActivityMainBinding
 
         val itembind = ItemActionBinding.inflate(layoutInflater)
 
-        this.title = "To do list               Total: " + actionService.actions.size + " - Checked : 0"
+        this.title = "To do list              Total: " + actionService.actions.size + " - Checked : 0"
 
      setContentView(binding.root)
 
+        actionService.addListener(listener)
+
         val manager = LinearLayoutManager(this) // LayoutManager
-        adapter = ActionAdapter(this) // Создание объекта
+        adapter = ActionAdapter(this, object : intActionListener {
+
+            override fun onActionRemove(action: Action) = actionService.removeAction(action)
+
+        }) // Создание объекта
         adapter.data = actionService.actions // Заполнение данными
 
         binding.recyclerView.layoutManager = manager // Назначение LayoutManager для RecyclerView
         binding.recyclerView.adapter = adapter // Назначение адаптера для RecyclerView
-
-
 
 
         //val navView: BottomNavigationView = binding.navView
@@ -74,7 +80,7 @@ class ActionService {
         "Дело 6", "Дело 7", "Дело 8", "Дело 9", "Дело 10")
 
     init {
-        for(i in 0..9){
+        for(i in 0..<text_actions.size){
             actions.add(Action(
                 id = i.toLong(),
                 text = text_actions[i],
@@ -82,7 +88,34 @@ class ActionService {
             ))
         }
     }
+
+    fun removeAction(action: Action) {
+        val index = actions.indexOfFirst { it.id == action.id } // Находим индекс дела в списке
+        if (index == -1) return // Останавливаемся, если не находим такого дела
+
+        actions = ArrayList(actions) // Создаем новый список
+        actions.removeAt(index) // Удаляем дело из списка
+
+        notifyChanges()
+    }
+
+    private var listeners = mutableListOf<ActionListener>() // Все слушатели
+
+    fun addListener(listener: ActionListener) {
+        listeners.add(listener)
+        //listener.invoke(actions)
+    }
+
+    fun removeListener(listener: ActionListener) {
+        listeners.remove(listener)
+        listener.invoke(actions)
+    }
+
+    private fun notifyChanges() = listeners.forEach { it.invoke(actions) }
 }
+
+//слушатель
+typealias ActionListener = (actions: List<Action>) -> Unit
 
 class App : Application() {
     val actionService = ActionService()
