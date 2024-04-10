@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.actioninfo.ActioninfoFragment" >
+
+    <TextView
+        android:id="@+id/textNewActionInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="50dp"
+        android:text="Что нужно сделать ?"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/TextNewActionInfo"
+        android:layout_width="164dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="30dp"
+        android:gravity="bottom|center"
+        android:hint="Введите текст"
+        android:text="Инфо"
+        android:textAlignment="center"
+        android:textColorHint="#00FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/textNewActionInfo"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textDeadLineInfo"
+        android:layout_width="140dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="55dp"
+        android:text="Срок выполнения"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textNewActionInfo" />
+
+    <TextView
+        android:id="@+id/TextDeadLineInfo"
+        android:layout_width="163dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="30dp"
+        android:gravity="bottom|center"
+        android:hint="Введите текст"
+        android:text="Инфо"
+        android:textAlignment="center"
+        android:textColorHint="#00FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/textDeadLineInfo"
+        app:layout_constraintTop_toBottomOf="@+id/TextNewActionInfo" />
+
+    <TextView
+        android:id="@+id/textDifficultyInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="65dp"
+        android:text="Сложность"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textDeadLineInfo" />
+
+    <TextView
+        android:id="@+id/TextDifficultyInfo"
+        android:layout_width="163dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="40dp"
+        android:gravity="bottom|center"
+        android:hint="Введите текст"
+        android:text="Инфо"
+        android:textAlignment="center"
+        android:textColorHint="#00FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/textDeadLineInfo"
+        app:layout_constraintTop_toBottomOf="@+id/TextDeadLineInfo" />
+
+    <TextView
+        android:id="@+id/textImportanceInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="60dp"
+        android:text="Важность"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textDifficultyInfo" />
+
+    <TextView
+        android:id="@+id/TextImportanceInfo"
+        android:layout_width="163dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="29dp"
+        android:gravity="bottom|center"
+        android:hint="Введите текст"
+        android:text="Инфо"
+        android:textAlignment="center"
+        android:textColorHint="#00FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/textDeadLineInfo"
+        app:layout_constraintTop_toBottomOf="@+id/TextDifficultyInfo" />
+
+    <Button
+        android:id="@+id/buttonBack2"
+        android:layout_width="348dp"
+        android:layout_height="66dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="55dp"
+        android:backgroundTint="#0E2EED"
+        android:text="Back"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextImportanceInfo" />
+</androidx.constraintlayout.widget.ConstraintLayout>

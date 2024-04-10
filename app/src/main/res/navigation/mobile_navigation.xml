@@ -3,7 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_todolist">
 
+    <fragment
+        android:id="@+id/navigation_todolist"
+        android:name="com.example.todolist.ui.todolist.TodolistFragment"
+        android:label="To do list"
+        tools:layout="@layout/fragment_todolist" >
+        <action
+            android:id="@+id/action_navigation_todolist_to_navigation_actioninfo"
+            app:destination="@id/navigation_actioninfo" />
+        <action
+            android:id="@+id/action_navigation_todolist_to_navigation_addnewaction"
+            app:destination="@id/navigation_addnewaction" />
+        <argument
+            android:name="addnewaction"
+            app:argType="java.util.ArrayList" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_actioninfo"
+        android:name="com.example.todolist.ui.actioninfo.ActioninfoFragment"
+        android:label="Action - detail information"
+        tools:layout="@layout/fragment_actioninfo" >
+        <action
+            android:id="@+id/action_navigation_actioninfo_to_navigation_todolist"
+            app:destination="@id/navigation_todolist" />
+        <argument
+            android:name="actioninfo"
+            app:argType="java.util.ArrayList" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_addnewaction"
+        android:name="com.example.todolist.ui.addnewaction.AddnewactionFragment"
+        android:label="New action"
+        tools:layout="@layout/fragment_addnewaction" >
+        <action
+            android:id="@+id/action_navigation_addnewaction_to_navigation_todolistAdd"
+            app:destination="@id/navigation_todolist" />
+        <action
+            android:id="@+id/action_navigation_addnewaction_to_navigation_todolistBack"
+            app:destination="@id/navigation_todolist" />
+    </fragment>
 
 </navigation>
