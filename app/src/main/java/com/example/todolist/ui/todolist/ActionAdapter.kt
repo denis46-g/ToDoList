@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 import com.example.todolist.databinding.ItemActionBinding
 import com.example.todolist.global_actions
-import com.example.todolist.global_actionsinfo
 
 class ActionAdapter( text: TextView, private val intActListen: intActionListener): RecyclerView.Adapter<ActionAdapter.ActionViewHolder>(), View.OnClickListener {
 
@@ -24,8 +23,6 @@ class ActionAdapter( text: TextView, private val intActListen: intActionListener
             field = newValue
             notifyDataSetChanged()
         }
-
-    var datainfo: MutableList<ActionInfo> = mutableListOf()
 
     class ActionViewHolder(val binding: ItemActionBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -55,11 +52,10 @@ class ActionAdapter( text: TextView, private val intActListen: intActionListener
 
             actionTextView.setOnClickListener {
                 global_actions = data.toMutableList()
-                global_actionsinfo = datainfo.toMutableList()
 
                 var arrList: ArrayList<CharSequence> = arrayListOf(actionTextView.text,
-                    datainfo[position].deadline, datainfo[position].difficulty,
-                    datainfo[position].importance)
+                    data[position].deadline, data[position].difficulty,
+                    data[position].importance)
 
                 var bundle = bundleOf("actioninfo" to arrList)
 
@@ -97,16 +93,8 @@ class ActionAdapter( text: TextView, private val intActListen: intActionListener
 
         when (view.id) {
             R.id.del -> {
-                var pos = 0
-                for(i in data.indices)
-                    if(data[i]==action)
-                    {
-                        pos = i
-                        break
-                    }
                 count_checked = intActListen.onActionCountChecked()
                 intActListen.onActionRemove(action)
-                datainfo.removeAt(pos)
                 if(action.isChecked)
                     count_checked--
                 t.text = "Total: $itemCount - Checked : $count_checked"

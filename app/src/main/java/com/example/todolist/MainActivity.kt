@@ -7,10 +7,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.todolist.databinding.ActivityMainBinding
 import com.example.todolist.ui.todolist.Action
-import com.example.todolist.ui.todolist.ActionInfo
 
 var global_actions = mutableListOf<Action>()
-var global_actionsinfo = mutableListOf<ActionInfo>()
 
 class MainActivity : AppCompatActivity() {
 
