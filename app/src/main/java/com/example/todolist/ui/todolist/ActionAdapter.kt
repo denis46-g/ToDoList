@@ -10,13 +10,14 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
+import com.example.todolist.data.Action
 import com.example.todolist.databinding.ItemActionBinding
-import com.example.todolist.global_actions
 
-class ActionAdapter( text: TextView, private val intActListen: intActionListener): RecyclerView.Adapter<ActionAdapter.ActionViewHolder>(), View.OnClickListener {
+class ActionAdapter(viewModel: TodolistViewModel, text: TextView, private val intActListen: intActionListener): RecyclerView.Adapter<ActionAdapter.ActionViewHolder>(), View.OnClickListener {
 
     var count_checked = 0;
     var t = text
+    var vm = viewModel
 
      var data: List<Action> = emptyList()
         set(newValue) {
@@ -48,12 +49,11 @@ class ActionAdapter( text: TextView, private val intActListen: intActionListener
 
         with(holder.binding) {
             
-            actionTextView.text = action.text
+            actionTextView.text = action.act
 
             actionTextView.setOnClickListener {
-                global_actions = data.toMutableList()
 
-                var arrList: ArrayList<CharSequence> = arrayListOf(actionTextView.text,
+                var arrList: ArrayList<CharSequence?> = arrayListOf(actionTextView.text,
                     data[position].deadline, data[position].difficulty,
                     data[position].importance)
 
@@ -63,7 +63,7 @@ class ActionAdapter( text: TextView, private val intActListen: intActionListener
                     bundle)
             }
 
-            myCheckBox.isChecked = data[position].isChecked
+            myCheckBox.isChecked = data[position].isChecked == true
             if(myCheckBox.isChecked)
                 actionTextView.paintFlags = actionTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             else
@@ -71,8 +71,8 @@ class ActionAdapter( text: TextView, private val intActListen: intActionListener
 
             myCheckBox.setOnClickListener{
                 count_checked = intActListen.onActionCountChecked()
-                data[position].isChecked = !data[position].isChecked
-                if(data[position].isChecked){
+                data[position].isChecked = !data[position].isChecked!!
+                if(data[position].isChecked == true){
                     count_checked++
                     myCheckBox.isChecked = true
                     actionTextView.paintFlags = actionTextView.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -83,6 +83,13 @@ class ActionAdapter( text: TextView, private val intActListen: intActionListener
                     actionTextView.paintFlags = actionTextView.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 }
                 t.text = "Total: $itemCount - Checked : $count_checked"
+
+                //update database
+                val updateAction = Action(id = data[position].id,
+                    act = data[position].act, isChecked = data[position].isChecked == true,
+                    deadline = data[position].deadline, difficulty = data[position].difficulty,
+                    importance = data[position].importance)
+                vm.update(updateAction)
             }
         }
     }
@@ -95,9 +102,12 @@ class ActionAdapter( text: TextView, private val intActListen: intActionListener
             R.id.del -> {
                 count_checked = intActListen.onActionCountChecked()
                 intActListen.onActionRemove(action)
-                if(action.isChecked)
+                if(action.isChecked == true)
                     count_checked--
                 t.text = "Total: $itemCount - Checked : $count_checked"
+
+                //delete element
+                vm.delete(action)
             }
         }
     }
